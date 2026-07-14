@@ -1,0 +1,978 @@
+/* ══════════════════════════════════════════════════════════════
+   LA MAISON CAFÉ — Nantes
+   DA groovy 70's : crème, orange brûlé, moutarde, olive.
+   Typo display : Cornery. Photos en blobs, vagues, fleurs.
+   ══════════════════════════════════════════════════════════════ */
+
+@font-face{
+  font-family:"Cornery";
+  src:url("assets/fonts/cornery.otf") format("opentype"),
+      url("assets/fonts/cornery.ttf") format("truetype");
+  font-weight:400; font-style:normal; font-display:swap;
+}
+
+:root{
+  --creme:      #FBF0DC;
+  --creme-2:    #F7E7C6;
+  --blanc:      #FFF7E6;
+  --orange:     #E2622B;
+  --orange-c:   #E8763A;
+  --moutarde:   #F0A93B;
+  --olive:      #4E5B25;
+  --olive-c:    #5C6B2E;
+  --brique:     #C0402B;
+  --brun:       #2A1A12;
+  --brun-2:     #3D291C;
+  --nuit:       #221610;
+
+  --d: "Cornery", Georgia, serif;   /* display groovy */
+  --c: "Archivo", system-ui, sans-serif;
+
+  --ease: cubic-bezier(.16,.84,.28,1);
+  --pad: clamp(1.25rem, 5vw, 5rem);
+  --max: 1360px;
+  --w: clamp(80px, 10vw, 160px);   /* hauteur des vagues (intro + sections) */
+
+  /* silhouette de marguerite, 8 pétales — sert de masque */
+  --m-fleur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23000'%3E%3Cellipse cx='50' cy='22' rx='14' ry='23'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(45 50 50)'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(90 50 50)'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(135 50 50)'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(180 50 50)'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(225 50 50)'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(270 50 50)'/%3E%3Cellipse cx='50' cy='22' rx='14' ry='23' transform='rotate(315 50 50)'/%3E%3Ccircle cx='50' cy='50' r='20'/%3E%3C/g%3E%3C/svg%3E");
+
+  /* symbole peace */
+  --m-peace: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='none' stroke='%23000' stroke-width='9'%3E%3Ccircle cx='50' cy='50' r='42'/%3E%3Cpath d='M50 8v84M50 50 20 80M50 50 80 80'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+html{ scroll-behavior:smooth; overflow-x:clip; }
+
+body{
+  background:var(--creme);
+  color:var(--brun);
+  font-family:var(--c);
+  font-size:clamp(.98rem,.94rem + .2vw,1.06rem);
+  line-height:1.65;
+  overflow-x:clip;
+  -webkit-font-smoothing:antialiased;
+}
+
+img{ display:block; max-width:100%; }
+ul{ list-style:none; }
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; color:inherit; background:none; border:0; cursor:pointer; }
+::selection{ background:var(--orange); color:var(--blanc); }
+:focus-visible{ outline:3px solid var(--orange); outline-offset:3px; border-radius:4px; }
+
+.grain{
+  position:fixed; inset:-50%; z-index:900; pointer-events:none;
+  opacity:.05; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 7s steps(5) infinite;
+}
+@keyframes grain{
+  0%,100%{transform:translate(0,0)} 25%{transform:translate(-2%,1%)}
+  50%{transform:translate(1%,-2%)} 75%{transform:translate(-1%,-1%)}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INTRO — la marée
+   Le logo s'installe, puis quatre vagues montent du bas et
+   traversent l'écran d'un seul mouvement continu. Elles passent
+   PAR-DESSUS le logo (donc l'emportent sans qu'il ait à
+   disparaître), et le fond suit en dernier : le hero apparaît.
+   ══════════════════════════════════════════════════════════════ */
+.intro{
+  position:fixed; inset:0; z-index:1000;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+/* le fond crème, qui porte le logo */
+.intro__fond{
+  position:absolute; inset:0; z-index:1;
+  background:var(--creme);
+}
+.intro__coeur{
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  gap:1.4rem;
+}
+.intro__logo{
+  width:clamp(220px, 34vw, 440px); height:auto;
+  opacity:0;
+  animation:logo-pose 1.3s cubic-bezier(.2,.7,.3,1) .12s forwards;
+}
+/* il se pose : léger recul, aucun rebond */
+@keyframes logo-pose{
+  from{ opacity:0; transform:translateY(14px) scale(.965); }
+  to  { opacity:1; transform:none; }
+}
+.intro__sous{
+  font-size:.76rem; font-weight:600;
+  letter-spacing:.3em; text-transform:uppercase;
+  color:var(--brun); opacity:0;
+  animation:sous-pose 1s ease .55s forwards;
+}
+@keyframes sous-pose{
+  from{ opacity:0; letter-spacing:.18em; }
+  to  { opacity:.55; letter-spacing:.3em; }
+}
+@keyframes respire{
+  0%,100%{ transform:rotate(0) scale(1); }
+  50%    { transform:rotate(5deg) scale(1.03); }
+}
+
+/* ── les vagues ──
+   Elles arrivent du HAUT, traversent l'écran vers le bas, et
+   s'immobilisent exactement à la place des vagues du hero (même tracé,
+   même hauteur → raccord invisible).
+
+   On utilise des ANIMATIONS et non des transitions : une transition ne
+   part que si le navigateur observe un changement de valeur entre deux
+   frames — ce qui n'était pas fiable ici, la classe étant posée très tôt.
+   Une animation `forwards`, elle, joue toujours et se fige sur sa fin.  */
+.maree{
+  position:absolute; left:0; right:0;
+  bottom:0; height:100%;
+  /* départ : bande + crête entièrement au-dessus de l'écran */
+  transform:translateY(calc(-100% - var(--w)));
+}
+.maree__crete{
+  position:absolute; left:0; bottom:100%;
+  width:100%; height:var(--w);
+  display:block;
+}
+.maree--1{ background:var(--brique);  z-index:2; }
+.maree--2{ background:var(--orange);  z-index:3; }
+.maree--3{ background:var(--moutarde);z-index:4; }
+.maree--4{ background:var(--creme);   z-index:5; }
+.maree--1 .maree__crete path{ fill:var(--brique); }
+.maree--2 .maree__crete path{ fill:var(--orange); }
+.maree--3 .maree__crete path{ fill:var(--moutarde); }
+.maree--4 .maree__crete path{ fill:var(--creme); }
+
+/* arrivée : translateY(100%) → la bande sort par le bas, seule la crête
+   reste dans le cadre. C'est la vague du hero, au pixel près. */
+@keyframes descend{
+  from{ transform:translateY(calc(-100% - var(--w))); }
+  to  { transform:translateY(100%); }
+}
+/* Les quatre bandes descendent SOLIDAIRES (aucun décalage) : leur
+   étagement vient du dessin — la crête crème est tracée plus bas dans
+   le viewBox que la moutarde, l'orange et la brique. On lit donc une
+   seule vague stratifiée.
+   Le moindre décalage temporel les écarterait de plusieurs centaines de
+   pixels, et la bande crème (au premier plan) masquerait les couleurs. */
+body.leve .maree{
+  animation:descend 1.5s cubic-bezier(.4,0,.2,1) forwards;
+}
+
+/* le crème et son logo descendent aussi : le hero se découvre par le haut */
+@keyframes fond-descend{
+  from{ transform:none; }
+  to  { transform:translateY(100%); }
+}
+body.leve .intro__fond{
+  animation:fond-descend 1.25s cubic-bezier(.42,0,.2,1) .12s forwards;
+}
+@keyframes coeur-part{ to{ opacity:0; } }
+body.leve .intro__coeur{
+  animation:coeur-part .45s ease forwards;
+}
+
+/* une fois posées, on efface l'intro : les vraies vagues du hero sont
+   dessous, exactement au même endroit */
+body.fini .intro{ visibility:hidden; }
+
+/* pendant l'intro, on ne scrolle pas */
+body.ferme{ overflow:hidden; }
+
+/* le hero se compose derrière, à mesure que la marée le découvre */
+.hero__titre, .hero__tags, .hero__phrase, .hero__actions{ opacity:0; }
+body.leve .hero__titre  { animation:monte 1.1s var(--ease) .85s forwards; }
+body.leve .hero__tags   { animation:monte 1.1s var(--ease) 1.02s forwards; }
+body.leve .hero__phrase { animation:monte 1.1s var(--ease) 1.16s forwards; }
+body.leve .hero__actions{ animation:monte 1.1s var(--ease) 1.30s forwards; }
+@keyframes monte{
+  from{ opacity:0; transform:translateY(26px); }
+  to  { opacity:1; transform:none; }
+}
+/* la fleur tourne en continu ; l'intro ne fait que la révéler */
+.fleur-hero{ opacity:0; }
+body.leve .fleur-hero{ animation:parait 1.2s ease .95s forwards; }
+@keyframes parait{ to{ opacity:1; } }
+
+/* ══════════ TYPO ══════════ */
+.titre-sec{
+  font-family:var(--d);
+  font-size:clamp(2rem,4.4vw,3.4rem);
+  line-height:1.05;
+  letter-spacing:.01em;
+  text-align:center;
+  display:flex; align-items:center; justify-content:center;
+  gap:.7rem; flex-wrap:wrap;
+}
+.titre-sec--c{ color:var(--blanc); text-align:left; justify-content:flex-start; }
+
+.titre-slab{
+  font-family:var(--c);
+  font-weight:800;
+  font-size:clamp(1.5rem,2.8vw,2.3rem);
+  line-height:1.18;
+  letter-spacing:-.01em;
+  text-transform:uppercase;
+  margin-bottom:1.2rem;
+}
+
+.oeil{
+  display:flex; align-items:center; gap:.5rem;
+  font-size:.74rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:var(--orange);
+  margin-bottom:1rem;
+}
+
+/* la marguerite détourée, en ponctuation des titres */
+.fleurette{
+  width:1em; height:auto;
+  flex:none;
+  font-size:1.05em;
+  animation:respire 9s ease-in-out infinite;
+}
+.fleurette--p{ font-size:.85em; }
+
+.pastille{
+  display:inline-block; width:.62em; height:.62em;
+  border-radius:50%; flex:none;
+  margin-right:.45em;
+  transform:translateY(-.05em);
+}
+.pastille--orange  { background:var(--orange); }
+.pastille--moutarde{ background:var(--moutarde); }
+.pastille--olive   { background:var(--olive); }
+.pastille--brique  { background:var(--brique); }
+
+/* ══════════ BOUTONS ══════════ */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:.85em 1.7em;
+  border-radius:999px;
+  font-weight:700; font-size:.82rem;
+  letter-spacing:.06em; text-transform:uppercase;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), background .25s;
+  white-space:nowrap;
+}
+.btn--orange{ background:var(--orange); color:var(--blanc); box-shadow:0 5px 0 #B44B1E; }
+.btn--orange:hover{ transform:translateY(-2px); box-shadow:0 7px 0 #B44B1E; }
+.btn--orange:active{ transform:translateY(3px); box-shadow:0 2px 0 #B44B1E; }
+.btn--moutarde{ background:var(--moutarde); color:var(--brun); box-shadow:0 5px 0 #C4842A; }
+.btn--moutarde:hover{ transform:translateY(-2px); box-shadow:0 7px 0 #C4842A; }
+.btn--creme{ background:var(--blanc); color:var(--brun); box-shadow:0 5px 0 rgba(0,0,0,.28); }
+.btn--creme:hover{ transform:translateY(-2px); box-shadow:0 7px 0 rgba(0,0,0,.3); }
+
+.pin{
+  display:inline-flex; align-items:center; gap:.55rem;
+  padding:.7em 1.3em;
+  border-radius:999px;
+  background:rgba(255,247,230,.14);
+  border:1.5px solid rgba(255,247,230,.55);
+  backdrop-filter:blur(6px);
+  color:var(--blanc);
+  font-size:.8rem; font-weight:600;
+  letter-spacing:.04em; text-transform:uppercase;
+  transition:background .3s;
+}
+.pin:hover{ background:rgba(255,247,230,.26); }
+.pin__ico{
+  width:12px; height:12px; flex:none;
+  background:var(--moutarde);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);
+}
+
+/* ══════════ NAV ══════════ */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  gap:1.5rem;
+  padding:1rem var(--pad);
+  transition:background .4s var(--ease), padding .4s var(--ease), box-shadow .4s;
+}
+.nav.colle{
+  background:var(--creme);
+  padding:.6rem var(--pad);
+  box-shadow:0 4px 24px rgba(42,26,18,.14);
+}
+.nav__logo{ display:flex; align-items:center; flex:none; }
+.nav__logo img{
+  height:clamp(52px, 6vw, 78px);
+  width:auto;
+  transition:height .4s var(--ease);
+}
+.nav.colle .nav__logo img{ height:clamp(44px, 4.8vw, 60px); }
+
+.nav__liens{ display:flex; gap:.35rem; }
+.nav__liens a{
+  padding:.5em 1em;
+  border-radius:999px;
+  border:1.5px solid transparent;
+  font-size:.76rem; font-weight:600;
+  letter-spacing:.06em; text-transform:uppercase;
+  color:var(--blanc);
+  transition:background .25s, border-color .25s, color .4s;
+}
+.nav__liens a:hover{ background:rgba(255,247,230,.18); }
+.nav.colle .nav__liens a{ color:var(--brun); border-color:rgba(42,26,18,.2); }
+.nav.colle .nav__liens a:hover,
+.nav.colle .nav__liens a.actif{ background:var(--orange); color:var(--blanc); border-color:var(--orange); }
+
+.nav__cta{ font-size:.74rem; padding:.7em 1.4em; }
+
+.nav__burger{
+  display:none; width:34px; height:22px; position:relative;
+}
+.nav__burger span{
+  position:absolute; left:0; width:100%; height:3px; border-radius:2px;
+  background:var(--blanc);
+  transition:transform .35s var(--ease), opacity .25s, background .4s;
+}
+.nav.colle .nav__burger span{ background:var(--brun); }
+.nav__burger span:nth-child(1){ top:0; }
+.nav__burger span:nth-child(2){ top:9px; }
+.nav__burger span:nth-child(3){ top:18px; }
+.nav__burger.actif span:nth-child(1){ transform:translateY(9px) rotate(45deg); }
+.nav__burger.actif span:nth-child(2){ opacity:0; }
+.nav__burger.actif span:nth-child(3){ transform:translateY(-9px) rotate(-45deg); }
+
+/* ══════════ HERO ══════════ */
+.hero{
+  position:relative;
+  min-height:100svh;
+  display:flex; align-items:center;
+  padding:8rem var(--pad) 9rem;
+  overflow:hidden;
+  background:var(--nuit);
+}
+.hero__photo{
+  position:absolute; inset:0;
+  width:100%; height:100%; object-fit:cover;
+}
+.hero__voile{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(100deg, rgba(34,22,16,.92) 0%, rgba(34,22,16,.7) 42%, rgba(34,22,16,.25) 75%),
+    linear-gradient(0deg, rgba(34,22,16,.75), transparent 45%);
+}
+
+.hero__texte{ position:relative; z-index:3; width:100%; max-width:var(--max); margin:0 auto; }
+.hero__titre{
+  font-family:var(--d);
+  font-size:clamp(3.2rem, 9vw, 8rem);
+  line-height:.94;
+  color:var(--blanc);
+  text-shadow:0 6px 0 rgba(0,0,0,.22);
+}
+.hero__tags{
+  margin-top:1.1rem;
+  display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;
+  font-weight:700; font-size:clamp(.9rem,1.5vw,1.15rem);
+  letter-spacing:.04em;
+  color:var(--moutarde);
+}
+.hero__tags i{ color:var(--orange); font-style:normal; }
+.hero__phrase{
+  margin-top:1.6rem;
+  font-weight:700;
+  font-size:clamp(1.1rem,2vw,1.6rem);
+  line-height:1.35;
+  color:var(--blanc);
+}
+.hero__actions{
+  margin-top:2rem;
+  display:flex; align-items:center; gap:.9rem; flex-wrap:wrap;
+}
+
+/* la grosse fleur du hero — posée sur le bord droit, immobile,
+   débordant du cadre comme sur la maquette */
+.fleur-hero{
+  position:absolute; z-index:2;
+  right:-12vw; bottom:8%;
+  width:min(42vw, 480px); height:auto;
+  filter:drop-shadow(0 16px 38px rgba(0,0,0,.38));
+}
+@keyframes tourne{ to{ transform:rotate(360deg); } }
+
+/* ══════════ VAGUES ══════════
+   Plusieurs tracés décalés, un par couleur. Chacun remplit
+   jusqu'au bord de la section ; le dernier dessiné recouvre
+   les précédents — d'où les bandes successives.            */
+.vague{
+  position:absolute; left:0; right:0;
+  width:100%; height:var(--w);
+  display:block; z-index:4;
+}
+.vague--bas{ bottom:-1px; }
+.vague--haut{ top:-1px; }
+
+.v-brique  { fill:var(--brique); }
+.v-orange  { fill:var(--orange); }
+.v-moutarde{ fill:var(--moutarde); }
+.v-olive   { fill:var(--olive-c); }
+.v-creme   { fill:var(--creme); }
+
+/* le trait d'encre, comme sur les illustrations */
+.v-trait{
+  fill:none;
+  stroke:var(--brun);
+  stroke-width:5;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+}
+
+/* ══════════ LES PIÈCES ══════════ */
+.pieces{
+  padding:clamp(4rem,7vw,6.5rem) var(--pad) clamp(4rem,7vw,6rem);
+  background:var(--creme);
+}
+.pieces__intro{
+  max-width:62ch; margin:1.2rem auto 0;
+  text-align:center; color:var(--brun-2);
+}
+.cartes{
+  max-width:var(--max); margin:clamp(2.5rem,5vw,4rem) auto 0;
+  display:grid; grid-template-columns:repeat(5,1fr);
+  gap:clamp(1rem,1.6vw,1.6rem);
+}
+.carte{
+  position:relative;
+  background:var(--creme-2);
+  border-radius:22px;
+  padding:.7rem .7rem 1.3rem;
+  transition:transform .4s var(--ease);
+}
+.carte:hover{ transform:translateY(-8px) rotate(-.6deg); }
+.carte__vue{
+  aspect-ratio:.78;
+  overflow:hidden;
+  clip-path:url(#blob);
+  background:var(--brun-2);
+  margin-bottom:1rem;
+}
+.carte__vue img{ width:100%; height:100%; object-fit:cover; }
+.carte__nom{
+  display:flex; align-items:center;
+  padding:0 .6rem;
+  font-family:var(--c); font-weight:800;
+  font-size:.95rem; letter-spacing:.08em; text-transform:uppercase;
+  margin-bottom:.45rem;
+}
+.carte p{
+  padding:0 .6rem;
+  font-size:.86rem; line-height:1.5;
+  color:var(--brun-2);
+}
+
+/* ══════════ HISTOIRE ══════════ */
+.histoire{
+  position:relative;
+  max-width:var(--max); margin:0 auto;
+  padding:clamp(3rem,6vw,5rem) var(--pad) clamp(4rem,7vw,6rem);
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:clamp(2rem,5vw,5rem);
+  align-items:center;
+}
+.histoire__txt p{ color:var(--brun-2); }
+.histoire__txt p + p{ margin-top:.9rem; }
+.signature{
+  margin-top:1.4rem !important;
+  font-family:var(--d);
+  font-size:1.35rem;
+  color:var(--orange) !important;
+}
+.histoire .btn{ margin-top:1.6rem; }
+
+.histoire__vue{ position:relative; }
+.histoire__vue img{
+  width:100%; aspect-ratio:4/3; object-fit:cover;
+  clip-path:url(#blob2);
+}
+/* le tampon "good vibes" */
+.tampon{
+  position:absolute; right:-18px; bottom:-26px;
+  width:clamp(110px, 13vw, 150px); aspect-ratio:1;
+  display:grid; place-items:center;
+  background:var(--orange);
+  border-radius:50%;
+  box-shadow:0 10px 26px rgba(42,26,18,.28);
+}
+.tampon svg{ position:absolute; inset:0; width:100%; height:100%; animation:tourne 22s linear infinite; }
+.tampon__tour{
+  font-family:var(--c); font-size:8.4px; font-weight:700;
+  letter-spacing:.16em; fill:var(--blanc);
+}
+.tampon__coeur{
+  font-family:var(--d);
+  font-size:clamp(1rem,1.5vw,1.3rem);
+  line-height:1;
+  color:var(--blanc);
+  text-align:center;
+}
+
+/* ══════════ AGENDA ══════════ */
+.agenda{
+  position:relative;
+  background:var(--brun);
+  color:var(--blanc);
+  padding:clamp(6rem,10vw,9rem) var(--pad) clamp(4rem,7vw,6rem);
+  overflow:hidden;
+}
+/* la vague doit rester hors flux — sinon elle devient une cellule de grille */
+.agenda > *:not(.vague):not(.deco){ position:relative; z-index:2; }
+
+/* l'en-tête : titre à gauche, bouton à droite, sur toute la largeur */
+.agenda__txt{
+  max-width:var(--max); margin:0 auto clamp(2.5rem,5vw,4rem);
+  display:grid; grid-template-columns:1fr auto;
+  gap:1.5rem 3rem; align-items:end;
+}
+.agenda__txt .titre-sec{ grid-column:1; }
+.agenda__txt p{
+  grid-column:1; grid-row:2;
+  color:rgba(255,247,230,.72); max-width:52ch;
+  margin-top:.6rem;
+}
+.agenda__txt .btn{ grid-column:2; grid-row:1 / span 2; align-self:center; }
+.agenda__note{
+  grid-column:1; grid-row:3;
+  font-size:.78rem; font-style:italic;
+  color:rgba(255,247,230,.45) !important;
+}
+
+.affiches{
+  max-width:var(--max); margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:clamp(1rem,1.8vw,1.8rem);
+}
+.aff{
+  background:var(--creme-2);
+  border-radius:18px;
+  padding:.6rem .6rem 1rem;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  transition:transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.aff:hover{
+  transform:translateY(-10px) rotate(-.8deg);
+  box-shadow:0 20px 40px rgba(0,0,0,.45);
+}
+.aff__vue{
+  aspect-ratio:.72;
+  overflow:hidden;
+  border-radius:12px;
+  background:var(--nuit);
+  margin-bottom:.85rem;
+}
+.aff__vue img{ width:100%; height:100%; object-fit:cover; }
+.aff__nom{
+  padding:0 .45rem;
+  font-family:var(--d);
+  font-size:clamp(1.15rem,1.7vw,1.5rem);
+  line-height:1.05;
+  color:var(--brun);
+}
+.aff__sous{
+  padding:0 .45rem; margin-top:.25rem;
+  font-size:.8rem; line-height:1.35;
+  color:var(--brun-2); opacity:.75;
+}
+.aff__h{
+  margin:.8rem .45rem 0;
+  display:inline-block;
+  padding:.32em .85em;
+  border-radius:999px;
+  background:var(--moutarde); color:var(--brun);
+  font-size:.72rem; font-weight:700;
+  letter-spacing:.04em;
+}
+/* chaque affiche prend une teinte différente — comme un vrai mur */
+.aff:nth-child(2){ background:var(--moutarde); }
+.aff:nth-child(2) .aff__h{ background:var(--brun); color:var(--blanc); }
+.aff:nth-child(4){ background:var(--orange); }
+.aff:nth-child(4) .aff__nom,
+.aff:nth-child(4) .aff__sous{ color:var(--blanc); }
+.aff:nth-child(4) .aff__sous{ opacity:.85; }
+
+/* ══════════ LA CARTE ══════════ */
+.carte-sec{
+  position:relative;
+  background:var(--olive);
+  color:var(--blanc);
+  padding:clamp(4rem,7vw,6rem) var(--pad);
+  display:grid; grid-template-columns:minmax(320px, 480px) 1fr;
+  gap:clamp(2.5rem,5vw,5rem);
+  align-items:center;
+  overflow:hidden;
+}
+/* le sunburst du fond, très discret */
+.carte-sec::before{
+  content:""; position:absolute;
+  top:50%; left:50%;
+  width:150vmax; aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(from 0deg at 50% 50%,
+    rgba(255,247,230,.018) 0deg 6deg, transparent 6deg 12deg);
+  animation:sunburst 140s linear infinite;
+  pointer-events:none;
+}
+@keyframes sunburst{
+  from{ transform:translate(-50%,-50%) rotate(0); }
+  to  { transform:translate(-50%,-50%) rotate(360deg); }
+}
+.carte-sec > *{ position:relative; z-index:2; }
+/* ── les prix : posés à même l'olive, pas de cadre ── */
+.carte-sec__mot{
+  margin-top:1rem;
+  color:rgba(255,247,230,.78);
+  max-width:44ch;
+}
+.prix{ margin-top:1.8rem; max-width:400px; }
+.prix li{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:1rem; padding:.7rem 0;
+  border-bottom:2px dashed rgba(255,247,230,.24);
+}
+.prix b{ font-weight:600; font-size:1rem; }
+.prix i{
+  font-style:normal;
+  font-family:var(--d);
+  font-size:clamp(1.3rem, 2vw, 1.7rem);
+  color:var(--moutarde);
+}
+
+/* le happy hour : une pastille moutarde, le soleil posé dessus */
+.hh{
+  position:relative;
+  margin-top:2.4rem;
+  display:inline-flex; flex-direction:column;
+  padding:1.1rem 2.4rem 1.2rem 1.6rem;
+  border-radius:20px;
+  background:var(--moutarde); color:var(--brun);
+  box-shadow:0 7px 0 #C4842A;
+}
+.hh__soleil{
+  position:absolute; right:-30px; top:-30px;
+  width:74px; height:auto;
+  animation:respire 9s ease-in-out infinite;
+}
+.hh__t{
+  font-size:.7rem; font-weight:800;
+  letter-spacing:.2em; text-transform:uppercase;
+  opacity:.75;
+}
+.hh__h{
+  font-family:var(--d);
+  font-size:clamp(1.8rem, 2.6vw, 2.3rem);
+  line-height:1.1;
+}
+.hh__j{ font-size:.8rem; font-weight:500; }
+
+.boissons{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(1rem,2vw,2rem);
+}
+.boisson__vue{
+  aspect-ratio:1;
+  overflow:hidden;
+  clip-path:url(#blob);
+  background:var(--olive-c);
+}
+.boisson__vue img{ width:100%; height:100%; object-fit:cover; }
+.boisson figcaption{
+  margin-top:.9rem;
+  text-align:center;
+  display:block;
+}
+.boisson figcaption{
+  background:var(--blanc); color:var(--brun);
+  border-radius:999px;
+  padding:.45em 1em;
+  font-size:.78rem; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase;
+  width:fit-content; margin-inline:auto;
+}
+.carte-sec__pdb{
+  grid-column:1 / -1;
+  font-size:.76rem; font-style:italic;
+  color:rgba(255,247,230,.5);
+}
+
+/* ══════════ BANDEAU GOOD VIBES ══════════ */
+.bandeau{
+  background:var(--moutarde);
+  border-top:4px solid var(--brun);
+  border-bottom:4px solid var(--brun);
+  overflow:hidden;
+  padding:.9rem 0;
+}
+.bandeau__piste{
+  display:flex; align-items:center; gap:2.2rem;
+  width:max-content;
+  animation:defile 42s linear infinite;
+}
+.bandeau__mot{
+  font-family:var(--d);
+  font-size:clamp(1.3rem,2.4vw,2rem);
+  color:var(--olive);
+  white-space:nowrap;
+}
+@keyframes defile{ to{ transform:translateX(-50%); } }
+
+/* les illustrations détourées défilent dans le bandeau */
+.ico{
+  height:clamp(38px, 4vw, 52px);
+  width:auto; flex:none; display:block;
+}
+.ico:nth-child(3n){ transform:rotate(-5deg); }
+.ico:nth-child(4n){ transform:rotate(4deg); }
+
+/* ══════════ LES ILLUSTRATIONS POSÉES ══════════ */
+.deco{ position:absolute; pointer-events:none; z-index:5; }
+
+.deco--soleil-carte{
+  width:clamp(70px, 8vw, 120px);
+  left:clamp(1rem, 3vw, 3rem); top:-2rem;
+  animation:respire 11s ease-in-out infinite;
+}
+
+/* la boule à facettes pend au-dessus de l'agenda, sous la vague */
+.deco--boule{
+  width:clamp(74px, 8vw, 112px);
+  right:clamp(2rem, 7vw, 7rem);
+  top:clamp(2.5rem, 5vw, 4.5rem);
+  z-index:1;
+  transform-origin:50% 0;
+  animation:balance 6s ease-in-out infinite;
+}
+@keyframes balance{
+  0%,100%{ transform:rotate(-3.5deg); }
+  50%    { transform:rotate(3.5deg); }
+}
+
+/* le pot de fleurs, posé au bord du bloc "notre maison" */
+.deco--pot{
+  width:clamp(90px, 11vw, 150px);
+  right:-1rem; top:-2.5rem;
+  z-index:3;
+  animation:respire 10s ease-in-out infinite;
+}
+
+/* les cartes à jouer, posées au-dessus des commodités */
+.deco--cartes{
+  width:clamp(80px, 8vw, 120px);
+  right:clamp(1rem, 4vw, 4rem);
+  bottom:clamp(4rem, 7vw, 6rem);
+  transform:rotate(7deg);
+}
+
+/* une illustration au coin de chaque pièce */
+.carte__deco{
+  position:absolute; z-index:3;
+  right:-10px; top:calc(0.7rem + 42%);
+  width:38%; height:auto;
+  filter:drop-shadow(0 5px 12px rgba(42,26,18,.32));
+  transition:transform .45s var(--ease);
+  transform:rotate(-4deg);
+}
+.carte:hover .carte__deco{ transform:rotate(5deg) translateY(-5px); }
+
+/* ══════════ GALERIE ══════════ */
+.galerie{
+  padding:clamp(4rem,7vw,6rem) var(--pad);
+  background:var(--creme);
+}
+.galerie__grille{
+  max-width:var(--max); margin:clamp(2rem,4vw,3rem) auto 0;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-auto-rows:150px;
+  gap:.9rem;
+}
+.g{ overflow:hidden; border-radius:16px; background:var(--creme-2); }
+.g img{ width:100%; height:100%; object-fit:cover; }
+/* mosaïque 4 × 3 qui se referme exactement : aucune photo ne dépasse.
+   Rangée 1-2 : la grande + quatre petites. Rangée 3 : une large + deux. */
+.g--1{ grid-column:span 2; grid-row:span 2; }
+.g--6{ grid-column:span 2; }
+.galerie__cta{ display:flex; width:fit-content; margin:2.2rem auto 0; }
+
+/* ══════════ INFOS ══════════ */
+.infos{
+  position:relative;
+  background:var(--brun);
+  color:var(--blanc);
+  /* on dégage la hauteur de la vague, plus une marge courte */
+  padding:calc(var(--w) + 2.5rem) var(--pad) 1.5rem;
+}
+/* ni la vague ni les illustrations ne doivent retomber dans le flux */
+.infos > *:not(.vague):not(.deco){ position:relative; z-index:2; }
+.infos .titre-sec{ color:var(--blanc); }
+.infos__grille{
+  max-width:var(--max); margin:clamp(1.8rem,3vw,2.5rem) auto 0;
+  display:grid;
+  grid-template-columns:repeat(3, 1fr) 1.15fr;
+  gap:clamp(1.4rem,2.4vw,2.4rem);
+  align-items:start;
+}
+.bloc h3{
+  font-family:var(--d);
+  font-size:1.35rem;
+  color:var(--moutarde);
+  margin-bottom:1rem;
+}
+.bloc p{ color:rgba(255,247,230,.78); }
+.horaires li{
+  display:flex; justify-content:space-between; align-items:baseline;
+  gap:1rem; padding:.5rem 0;
+  border-bottom:1px dashed rgba(255,247,230,.22);
+  font-size:.9rem;
+}
+.horaires b{ white-space:nowrap; }
+.hhl, .hhl b{ color:var(--moutarde); }
+.tel{
+  font-family:var(--d); font-size:1.5rem;
+  color:var(--moutarde);
+  border-bottom:2px solid transparent;
+}
+.tel:hover{ border-color:var(--moutarde); }
+.mini{ margin-top:.6rem; font-size:.84rem; }
+.reseaux{ display:flex; gap:1rem; margin-top:1.1rem; }
+.reseaux a{
+  padding:.4em 1em; border-radius:999px;
+  border:1.5px solid rgba(255,247,230,.4);
+  font-size:.74rem; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase;
+  transition:background .25s, color .25s;
+}
+.reseaux a:hover{ background:var(--moutarde); color:var(--brun); border-color:var(--moutarde); }
+
+/* le plan */
+.plan{
+  position:relative;
+  border-radius:18px; overflow:hidden;
+  border:3px solid rgba(255,247,230,.2);
+  aspect-ratio:15/11;
+  transition:transform .35s var(--ease);
+}
+.plan:hover{ transform:translateY(-4px); }
+.plan svg{ width:100%; height:100%; display:block; }
+.p-fond{ fill:#EFE3C8; }
+.p-vert{ fill:#CBD8A6; }
+.p-rue{ stroke:#FFF7E6; stroke-width:11; fill:none; }
+.p-pt{ fill:var(--orange); }
+.p-halo{ fill:var(--orange); opacity:.22; }
+.plan__etiq{
+  position:absolute; left:50%; bottom:12px;
+  transform:translateX(-50%);
+  background:var(--blanc); color:var(--brun);
+  padding:.35em .9em; border-radius:999px;
+  font-size:.72rem; font-weight:700;
+  letter-spacing:.06em; text-transform:uppercase;
+  white-space:nowrap;
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+}
+
+.commodites{
+  max-width:var(--max); margin:clamp(1.6rem,2.5vw,2.2rem) auto 0;
+  display:flex; flex-wrap:wrap; gap:.5rem;
+}
+.commodites li{
+  padding:.4em .9em; border-radius:999px;
+  border:1.5px solid rgba(255,247,230,.25);
+  font-size:.74rem;
+  color:rgba(255,247,230,.75);
+}
+.infos__legal{
+  max-width:var(--max); margin:1.6rem auto 0;
+  padding-top:1.2rem;
+  border-top:1px solid rgba(255,247,230,.15);
+  font-size:.74rem;
+  color:rgba(255,247,230,.4);
+  text-align:center;
+}
+
+/* ══════════ RÉVÉLATIONS ══════════ */
+.rev{
+  opacity:0; transform:translateY(22px);
+  transition:opacity .8s var(--ease) var(--d2,0ms),
+             transform .8s var(--ease) var(--d2,0ms);
+}
+.rev.vu{ opacity:1; transform:none; }
+
+/* ══════════ RESPONSIVE ══════════ */
+@media (max-width:1100px){
+  .cartes{ grid-template-columns:repeat(3,1fr); }
+  .affiches{ grid-template-columns:repeat(3,1fr); }
+  .agenda{ grid-template-columns:1fr; }
+  .carte-sec{ grid-template-columns:1fr; }
+  .infos__grille{ grid-template-columns:1fr 1fr; }
+  .plan{ grid-column:span 2; min-height:220px; }
+}
+
+@media (max-width:860px){
+  .nav__liens{
+    position:fixed; inset:0;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:1rem;
+    background:var(--creme);
+    transform:translateY(-100%);
+    transition:transform .5s var(--ease);
+    z-index:-1;
+  }
+  .nav__liens.ouvert{ transform:none; z-index:1; }
+  .nav__liens a{
+    color:var(--brun) !important;
+    font-family:var(--d);
+    font-size:1.6rem; text-transform:none; letter-spacing:0;
+    border:0;
+  }
+  .nav__burger{ display:block; z-index:2; }
+  .nav__cta{ display:none; }
+
+  .hero{ padding-top:7rem; padding-bottom:7rem; }
+  /* sur mobile la fleur n'est plus centrée verticalement */
+  .fleur-hero{ right:-24vw; top:auto; bottom:6%; width:62vw; transform:none; }
+  body.leve .fleur-hero{
+    animation:tourne-m 46s linear infinite, parait-m 1.3s ease .85s forwards;
+  }
+  @keyframes tourne-m{ from{ transform:rotate(0); } to{ transform:rotate(360deg); } }
+  @keyframes parait-m{ to{ opacity:.5; } }
+
+  .deco--pot{ width:100px; right:0; top:-1.5rem; }
+  .deco--cartes{ display:none; }
+  .deco--soleil-hero{ display:none; }
+
+  .cartes{ grid-template-columns:repeat(2,1fr); }
+  .histoire{ grid-template-columns:1fr; }
+  .histoire__vue{ order:-1; }
+  .tampon{ right:6px; bottom:-18px; }
+
+  .affiches{ grid-template-columns:repeat(2,1fr); }
+  .boissons{ grid-template-columns:1fr; gap:1.4rem; }
+  .galerie__grille{ grid-template-columns:repeat(2,1fr); grid-auto-rows:120px; }
+  .infos__grille{ grid-template-columns:1fr; }
+  .plan{ grid-column:span 1; }
+}
+
+@media (max-width:520px){
+  .cartes{ grid-template-columns:1fr; }
+  .affiches{ grid-template-columns:1fr 1fr; }
+  .hero__titre{ font-size:clamp(2.6rem,13vw,4rem); }
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .rev{ opacity:1; transform:none; }
+  .intro{ display:none; }
+  .hero__titre, .hero__tags, .hero__phrase, .hero__actions, .fleur-hero{ opacity:1; }
+}

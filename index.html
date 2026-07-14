@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La Maison Café — Bar 70's à Nantes · Concerts, DJ sets, stand-up</title>
+  <meta name="description" content="La Maison Café, 4 rue Lebrun à Nantes. Bar, concerts, stand-up, DJ sets. Cuisine, salon, grenier, salle de bain, terrasse — chaque pièce son ambiance. Comme à la maison." />
+  <meta property="og:title" content="La Maison Café — Comme à la maison. En beaucoup plus drôle." />
+  <meta property="og:description" content="Bar · Concerts · Stand-up · DJ sets · 70's 80's 90's — 4 rue Lebrun, quartier Joffre, Nantes." />
+  <meta name="theme-color" content="#E2622B" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=18" />
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ══════════ INTRO ══════════
+     Une marée. Le logo s'installe sur le crème, puis quatre vagues
+     de couleur montent du bas, traversent l'écran d'un seul geste
+     et l'emportent avec elles. Le hero est découvert derrière. -->
+<div class="intro" id="intro">
+
+  <!-- le fond, qui porte le logo -->
+  <div class="intro__fond">
+    <div class="intro__coeur">
+      <img class="intro__logo" src="assets/img/deco/logo.png" alt="La Maison Café" />
+      <p class="intro__sous">Bar · Nantes · quartier Joffre</p>
+    </div>
+  </div>
+
+  <!-- Les vagues. Chaque crête reprend EXACTEMENT le tracé de la
+       bande correspondante du hero : quand elles se posent, elles se
+       superposent au pixel près aux vagues du hero. Le raccord est
+       invisible. -->
+  <div class="maree maree--1">
+    <svg class="maree__crete" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 34C130 10 250 62 400 54 560 45 640 6 800 22c150 15 230 54 380 40 110-10 180-32 260-42V180H0Z" />
+    </svg>
+  </div>
+
+  <div class="maree maree--2">
+    <svg class="maree__crete" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 70C110 44 260 96 420 84 570 73 650 30 820 48c140 15 230 52 380 40 100-8 170-28 240-36V180H0Z" />
+    </svg>
+  </div>
+
+  <div class="maree maree--3">
+    <svg class="maree__crete" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 104C150 82 240 132 400 122 560 112 660 70 840 88c140 14 220 46 370 34 100-8 170-24 230-32V180H0Z" />
+    </svg>
+  </div>
+
+  <div class="maree maree--4">
+    <svg class="maree__crete" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 140C120 118 270 164 430 154 580 145 680 108 850 124c140 13 230 42 380 30 90-7 155-24 210-32V180H0Z" />
+    </svg>
+  </div>
+</div>
+
+<!-- formes réutilisables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- découpe "blob" : coins doux, bords ondulés -->
+    <clipPath id="blob" clipPathUnits="objectBoundingBox">
+      <path d="M.06.10C.06.04.11 0 .18 0h.65C.90 0 .95.05.95.11c0 .06-.02.10 0 .17.02.08.05.13.05.20 0 .09-.04.13-.05.21-.01.08.01.13 0 .20C.94.96.90 1 .83 1H.19C.11 1 .05.95.05.88c0-.07.02-.12 0-.20C.03.60 0 .55 0 .48c0-.08.04-.12.05-.19C.07.22.06.16.06.10Z"/>
+    </clipPath>
+    <clipPath id="blob2" clipPathUnits="objectBoundingBox">
+      <path d="M0 .14C0 .06.06 0 .14 0h.70C.93 0 1 .06 1 .14v.30c0 .06-.03.09-.03.14 0 .06.03.09.03.15v.13C1 .93.94 1 .86 1H.15C.07 1 0 .94 0 .86V.72c0-.06.03-.09.03-.15C.03.51 0 .49 0 .43Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav" id="nav">
+  <a class="nav__logo" href="#haut" aria-label="La Maison Café — accueil">
+    <img src="assets/img/deco/logo.png" alt="La Maison Café" />
+  </a>
+  <nav class="nav__liens" id="navLiens">
+    <a href="#pieces">Le lieu</a>
+    <a href="#histoire">La maison</a>
+    <a href="#agenda">Agenda</a>
+    <a href="#carte">La carte</a>
+    <a href="#galerie">Galerie</a>
+    <a href="#infos">Infos</a>
+  </nav>
+  <a class="btn btn--orange nav__cta" href="tel:0240370412">Appeler</a>
+  <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="haut">
+  <img class="hero__photo" src="assets/img/hero.jpg" alt="L'intérieur de La Maison Café, bar 70's à Nantes" />
+  <div class="hero__voile" aria-hidden="true"></div>
+
+  <!-- la grosse fleur -->
+  <img class="fleur-hero" src="assets/img/deco/fleur.png" alt="" aria-hidden="true" />
+
+  <div class="hero__texte">
+    <h1 class="hero__titre">La Maison<br />Café</h1>
+    <p class="hero__tags">Bar <i>✦</i> Concerts <i>✦</i> Stand-up <i>✦</i> DJ sets</p>
+    <p class="hero__phrase">Comme à la maison.<br />En beaucoup plus drôle.</p>
+    <div class="hero__actions">
+      <a class="btn btn--creme" href="#pieces">Visiter la maison</a>
+      <a class="pin" href="https://maps.google.com/?q=La+Maison+Caf%C3%A9+4+rue+Lebrun+Nantes" target="_blank" rel="noopener">
+        <span class="pin__ico" aria-hidden="true"></span>4 rue Lebrun, Nantes
+      </a>
+    </div>
+  </div>
+
+  <!-- Vagues superposées. Chaque bande a sa PROPRE courbe : bosses
+       de tailles inégales, jamais parallèles — c'est ce qui donne
+       le tracé à la main plutôt que la sinusoïde de machine. -->
+  <svg class="vague vague--bas" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+    <path class="v-brique" d="M0 34C130 10 250 62 400 54 560 45 640 6 800 22c150 15 230 54 380 40 110-10 180-32 260-42V180H0Z" />
+    <path class="v-orange" d="M0 70C110 44 260 96 420 84 570 73 650 30 820 48c140 15 230 52 380 40 100-8 170-28 240-36V180H0Z" />
+    <path class="v-moutarde" d="M0 104C150 82 240 132 400 122 560 112 660 70 840 88c140 14 220 46 370 34 100-8 170-24 230-32V180H0Z" />
+    <path class="v-creme" d="M0 140C120 118 270 164 430 154 580 145 680 108 850 124c140 13 230 42 380 30 90-7 155-24 210-32V180H0Z" />
+  </svg>
+</section>
+
+<!-- ══════════ LES PIÈCES ══════════ -->
+<section class="pieces" id="pieces">
+  <h2 class="titre-sec">
+    <img class="fleurette" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" />
+    Chaque pièce, son ambiance
+    <img class="fleurette" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" />
+  </h2>
+  <p class="pieces__intro">
+    Quatre pièces, un grenier, une terrasse. On boit dans la cuisine, on s'affale
+    au salon, on s'assoit dans la baignoire — et le soir, tout le monde monte.
+  </p>
+
+  <div class="cartes">
+    <article class="carte">
+      <div class="carte__vue"><img src="assets/img/piece-cuisine.jpg" alt="La cuisine de La Maison Café" loading="lazy" /></div>
+      <img class="carte__deco" src="assets/img/deco/cocktail.png" alt="" aria-hidden="true" />
+      <h3 class="carte__nom"><span class="pastille pastille--olive" aria-hidden="true"></span>Cuisine</h3>
+      <p>Le cœur qui mijote. Le comptoir, la tireuse, et les meilleures conversations de la soirée.</p>
+    </article>
+
+    <article class="carte">
+      <div class="carte__vue"><img src="assets/img/piece-salon.jpg" alt="Le salon de La Maison Café" loading="lazy" /></div>
+      <img class="carte__deco" src="assets/img/deco/vinyle.png" alt="" aria-hidden="true" />
+      <h3 class="carte__nom"><span class="pastille pastille--orange" aria-hidden="true"></span>Salon</h3>
+      <p>Velours, vinyles, lumière basse. On s'assoit cinq minutes et on repart trois heures plus tard.</p>
+    </article>
+
+    <article class="carte">
+      <div class="carte__vue"><img src="assets/img/piece-grenier.jpg" alt="Le grenier de La Maison Café" loading="lazy" /></div>
+      <img class="carte__deco" src="assets/img/deco/babyfoot.png" alt="" aria-hidden="true" />
+      <h3 class="carte__nom"><span class="pastille pastille--moutarde" aria-hidden="true"></span>Grenier</h3>
+      <p>Babyfoot, fléchettes, jeux et vieux vinyles. Et le soir venu, la scène et les DJ sets.</p>
+    </article>
+
+    <article class="carte">
+      <div class="carte__vue"><img src="assets/img/piece-bain.jpg" alt="La salle de bain de La Maison Café, avec sa baignoire" loading="lazy" /></div>
+      <img class="carte__deco" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" />
+      <h3 class="carte__nom"><span class="pastille pastille--brique" aria-hidden="true"></span>Salle de bain</h3>
+      <p>Oui, il y a une baignoire. Oui, on peut s'asseoir dedans. C'est la photo que vous enverrez ce soir.</p>
+    </article>
+
+    <article class="carte">
+      <div class="carte__vue"><img src="assets/img/piece-terrasse.jpg" alt="La terrasse de La Maison Café" loading="lazy" /></div>
+      <img class="carte__deco" src="assets/img/deco/soleil.png" alt="" aria-hidden="true" />
+      <h3 class="carte__nom"><span class="pastille pastille--olive" aria-hidden="true"></span>Terrasse</h3>
+      <p>Dès que le soleil daigne passer sur Nantes, l'extérieur est ouvert. Et il se remplit vite.</p>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ HISTOIRE ══════════ -->
+<section class="histoire" id="histoire">
+  <div class="histoire__txt">
+    <p class="oeil">Notre maison <img class="fleurette fleurette--p" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" /></p>
+    <h2 class="titre-slab">
+      Une maison qui vit<br />la nuit comme le jour.
+    </h2>
+    <p>
+      Quartier Joffre, au 4 rue Lebrun. On pousse la porte et on ne rentre pas
+      dans un bar : on rentre chez quelqu'un. Le papier peint est d'époque, le
+      canapé est en velours, le frigo est un vrai frigo.
+    </p>
+    <p>
+      Ici se croisent les générations, les musiques, les idées, les rires et les
+      apéros qui finissent en concerts improvisés. Des prix de quartier, un demi
+      à 2,60 €, un Picon bière qui coule sérieusement, et de la musique jusqu'à
+      deux heures du matin.
+    </p>
+    <p class="signature">Votre pause, notre maison.</p>
+    <a class="btn btn--orange" href="#agenda">Voir ce qui se passe</a>
+  </div>
+
+  <img class="deco deco--pot" src="assets/img/deco/pot-fleurs.png" alt="" aria-hidden="true" />
+  <div class="histoire__vue">
+    <img src="assets/img/histoire.jpg" alt="La façade de La Maison Café, 4 rue Lebrun à Nantes" loading="lazy" />
+    <div class="tampon">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <path id="cercleTxt" d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1 -88 0" fill="none" />
+        <text class="tampon__tour"><textPath href="#cercleTxt" startOffset="0">
+          BAR · CONCERTS · STAND-UP · DJ SETS · 70'S 80'S 90'S ·
+        </textPath></text>
+      </svg>
+      <span class="tampon__coeur">Good<br />vibes</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ AGENDA ══════════ -->
+<section class="agenda" id="agenda">
+  <!-- Chaque bande a sa propre courbe : jamais deux vagues parallèles. -->
+  <svg class="vague vague--haut" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="v-olive" d="M0 118C140 146 250 96 410 106c150 9 250 46 420 32 140-11 230-46 380-34 100 8 170 28 230 38V0H0Z" />
+    <path class="v-moutarde" d="M0 88C120 118 260 66 420 78c160 12 250 46 420 32 140-11 250-48 400-36 100 8 165 30 200 40V0H0Z" />
+    <path class="v-creme" d="M0 56C160 88 240 36 400 46c160 10 280 50 450 36 140-11 200-50 350-38 110 9 180 30 240 40V0H0Z" />
+  </svg>
+
+  <img class="deco deco--boule" src="assets/img/deco/boule-disco.png" alt="" aria-hidden="true" />
+
+  <div class="agenda__txt">
+    <h2 class="titre-sec titre-sec--c">Agenda <img class="fleurette" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" /></h2>
+    <p>
+      Ça bouge à la maison : concerts, DJ sets, stand-up, scènes ouvertes.
+      Entrée libre ou prix libre, et ça joue jusqu'à 2h.
+    </p>
+    <a class="btn btn--moutarde" href="https://www.instagram.com/lamaisoncafenantes/" target="_blank" rel="noopener">
+      Tout l'agenda sur Instagram
+    </a>
+    <p class="agenda__note">La programmation change chaque semaine.</p>
+  </div>
+
+  <div class="affiches">
+    <article class="aff">
+      <div class="aff__vue"><img src="assets/img/aff-1.jpg" alt="Soirée Get Down à La Maison Café" loading="lazy" /></div>
+      <p class="aff__nom">Get Down</p>
+      <p class="aff__sous">Disco · Funk · Boogie</p>
+      <p class="aff__h">21h — 1h30</p>
+    </article>
+    <article class="aff">
+      <div class="aff__vue"><img src="assets/img/aff-2.jpg" alt="Soirée Coffee House à La Maison Café" loading="lazy" /></div>
+      <p class="aff__nom">Coffee House</p>
+      <p class="aff__sous">Que d'la house</p>
+      <p class="aff__h">21h — 1h30</p>
+    </article>
+    <article class="aff">
+      <div class="aff__vue"><img src="assets/img/aff-3.jpg" alt="Concerts live à La Maison Café" loading="lazy" /></div>
+      <p class="aff__nom">Les concerts</p>
+      <p class="aff__sous">Groupes locaux</p>
+      <p class="aff__h">21h — 1h30</p>
+    </article>
+    <article class="aff">
+      <div class="aff__vue"><img src="assets/img/aff-4.jpg" alt="Soirée stand-up à La Maison Café" loading="lazy" /></div>
+      <p class="aff__nom">Stand-up</p>
+      <p class="aff__sous">Scène ouverte</p>
+      <p class="aff__h">Le soir</p>
+    </article>
+    <article class="aff">
+      <div class="aff__vue"><img src="assets/img/aff-5.jpg" alt="Soirées 70's 80's 90's à La Maison Café" loading="lazy" /></div>
+      <p class="aff__nom">70's 80's 90's</p>
+      <p class="aff__sous">La boum de la maison</p>
+      <p class="aff__h">Jusqu'à 2h</p>
+    </article>
+  </div>
+</section>
+
+<!-- ══════════ LA CARTE ══════════ -->
+<section class="carte-sec" id="carte">
+  <div class="carte-sec__txt">
+    <h2 class="titre-sec titre-sec--c">La carte <img class="fleurette" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" /></h2>
+    <p class="carte-sec__mot">
+      Des prix de quartier qui n'ont pas bougé depuis longtemps, des bières
+      artisanales, des cocktails maison — et LE Picon bière dont la maison
+      ne se remet pas.
+    </p>
+
+    <ul class="prix">
+      <li><b>Le demi</b><i>2,60 €</i></li>
+      <li><b>La pinte</b><i>5,00 €</i></li>
+      <li><b>La pinte en happy hour</b><i>4,00 €</i></li>
+      <li><b>Le café</b><i>1,50 €</i></li>
+    </ul>
+
+    <div class="hh">
+      <img class="hh__soleil" src="assets/img/deco/soleil.png" alt="" aria-hidden="true" />
+      <span class="hh__t">Happy hour</span>
+      <span class="hh__h">17h → 20h</span>
+      <span class="hh__j">du lundi au vendredi</span>
+    </div>
+  </div>
+
+  <div class="boissons">
+    <figure class="boisson">
+      <div class="boisson__vue"><img src="assets/img/boisson-1.jpg" alt="Picon bière" loading="lazy" /></div>
+      <figcaption>Picon bière</figcaption>
+    </figure>
+    <figure class="boisson">
+      <div class="boisson__vue"><img src="assets/img/boisson-2.jpg" alt="Bière pression" loading="lazy" /></div>
+      <figcaption>Bières &amp; artisanales</figcaption>
+    </figure>
+    <figure class="boisson">
+      <div class="boisson__vue"><img src="assets/img/boisson-3.jpg" alt="Cocktail maison" loading="lazy" /></div>
+      <figcaption>Cocktails maison</figcaption>
+    </figure>
+  </div>
+  <p class="carte-sec__pdb">Prix indicatifs · la carte bouge selon les arrivages.</p>
+</section>
+
+<!-- ══════════ BANDEAU GOOD VIBES ══════════ -->
+<div class="bandeau" aria-hidden="true">
+  <div class="bandeau__piste" id="piste">
+    <span class="bandeau__mot">Good vibes</span>
+    <img class="ico" src="assets/img/deco/soleil.png" alt="" />
+    <img class="ico" src="assets/img/deco/marguerite.png" alt="" />
+    <img class="ico" src="assets/img/deco/vinyle.png" alt="" />
+    <img class="ico" src="assets/img/deco/boule-disco.png" alt="" />
+    <img class="ico" src="assets/img/deco/babyfoot.png" alt="" />
+    <img class="ico" src="assets/img/deco/cartes.png" alt="" />
+    <img class="ico" src="assets/img/deco/cocktail.png" alt="" />
+    <img class="ico" src="assets/img/deco/peace.png" alt="" />
+    <span class="bandeau__mot">Comme à la maison</span>
+    <img class="ico" src="assets/img/deco/fleur.png" alt="" />
+    <img class="ico" src="assets/img/deco/pot-fleurs.png" alt="" />
+    <img class="ico" src="assets/img/deco/soleil.png" alt="" />
+    <img class="ico" src="assets/img/deco/vinyle.png" alt="" />
+    <img class="ico" src="assets/img/deco/boule-disco.png" alt="" />
+    <img class="ico" src="assets/img/deco/cocktail.png" alt="" />
+  </div>
+</div>
+
+<!-- ══════════ GALERIE ══════════ -->
+<section class="galerie" id="galerie">
+  <h2 class="titre-sec">Galerie <img class="fleurette" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" /></h2>
+  <div class="galerie__grille">
+    <figure class="g g--1"><img src="assets/img/galerie-1.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--2"><img src="assets/img/galerie-2.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--3"><img src="assets/img/galerie-3.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--4"><img src="assets/img/galerie-4.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--5"><img src="assets/img/galerie-5.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--6"><img src="assets/img/galerie-6.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--7"><img src="assets/img/galerie-7.jpg" alt="La Maison Café" loading="lazy" /></figure>
+    <figure class="g g--8"><img src="assets/img/galerie-8.jpg" alt="La Maison Café" loading="lazy" /></figure>
+  </div>
+  <a class="btn btn--orange galerie__cta" href="https://www.instagram.com/lamaisoncafenantes/" target="_blank" rel="noopener">
+    Voir plus de photos
+  </a>
+</section>
+
+<!-- ══════════ INFOS ══════════ -->
+<footer class="infos" id="infos">
+  <svg class="vague vague--haut" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
+    <path class="v-brique" d="M0 124C120 150 270 98 430 110c150 11 220 46 390 32 140-11 250-46 400-34 100 8 170 30 220 40V0H0Z" />
+    <path class="v-orange" d="M0 92C150 120 250 68 410 80c160 12 250 46 420 32 140-11 250-46 400-34 100 8 160 30 210 40V0H0Z" />
+    <path class="v-creme" d="M0 60C130 90 280 38 440 50c150 11 230 46 400 32 140-11 220-46 370-34 110 9 180 30 230 40V0H0Z" />
+  </svg>
+
+  <h2 class="titre-sec">Infos pratiques <img class="fleurette" src="assets/img/deco/marguerite.png" alt="" aria-hidden="true" /></h2>
+
+  <div class="infos__grille">
+    <div class="bloc">
+      <h3>Horaires</h3>
+      <ul class="horaires">
+        <li><span>Lundi — Samedi</span><b>15h → 2h</b></li>
+        <li><span>Dimanche</span><b>17h → 2h</b></li>
+        <li class="hhl"><span>Happy hour (lun—ven)</span><b>17h → 20h</b></li>
+      </ul>
+    </div>
+
+    <div class="bloc">
+      <h3>Adresse</h3>
+      <p>
+        La Maison Café<br />
+        4 rue Lebrun<br />
+        Quartier Joffre<br />
+        44000 Nantes
+      </p>
+    </div>
+
+    <div class="bloc">
+      <h3>Contact</h3>
+      <p><a class="tel" href="tel:0240370412">02 40 37 04 12</a></p>
+      <p class="mini">Réservation de table par téléphone.<br />Pour les groupes, appelez : on s'arrange.</p>
+      <div class="reseaux">
+        <a href="https://www.instagram.com/lamaisoncafenantes/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://maps.google.com/?q=La+Maison+Caf%C3%A9+4+rue+Lebrun+Nantes" target="_blank" rel="noopener">Y aller</a>
+      </div>
+    </div>
+
+    <a class="plan" href="https://maps.google.com/?q=La+Maison+Caf%C3%A9+4+rue+Lebrun+Nantes" target="_blank" rel="noopener" aria-label="Ouvrir La Maison Café dans Google Maps">
+      <svg viewBox="0 0 300 220" aria-hidden="true">
+        <rect class="p-fond" x="0" y="0" width="300" height="220" />
+        <path class="p-vert" d="M0 150h90v70H0Z" />
+        <path class="p-vert" d="M215 0h85v58h-85Z" />
+        <g class="p-rue">
+          <path d="M-5 92h310" /><path d="M-5 168h310" /><path d="M96 -5v230" /><path d="M210 -5v230" />
+          <path d="M-5 44h310" />
+        </g>
+        <circle class="p-pt" cx="153" cy="130" r="9" />
+        <circle class="p-halo" cx="153" cy="130" r="20" />
+      </svg>
+      <span class="plan__etiq">La Maison Café</span>
+    </a>
+  </div>
+
+  <img class="deco deco--cartes" src="assets/img/deco/cartes.png" alt="" aria-hidden="true" />
+  <ul class="commodites">
+    <li>Terrasse</li><li>Fléchettes</li><li>Babyfoot</li><li>Jeux de société</li>
+    <li>Wifi</li><li>Accès PMR</li><li>Privatisation</li><li>Chèques non acceptés</li>
+  </ul>
+
+  <p class="infos__legal">
+    © <span id="annee">2026</span> La Maison Café ·
+    L'abus d'alcool est dangereux pour la santé, à consommer avec modération.
+  </p>
+</footer>
+
+<script src="main.js?v=18"></script>
+</body>
+</html>
