@@ -52,23 +52,17 @@ correspondante de `confidentialite.html`).
 > domaine servi, ni l'entité d'hébergement retenue ne sont établis. À confirmer, puis à
 > écrire.
 
-### 1.4 La police Cornery n'est pas licenciée pour cet usage
+### 1.4 ~~La police Cornery n'est pas licenciée pour cet usage~~ — RÉGLÉ le 17 juillet 2026
 
-Les titres du site (hero, titres de section, prix, noms de soirées) sont composés en
-**Cornery**, fournie en version **« Demo — for Personal Use »**. **Un site d'établissement
-est un usage commercial.** En l'état, le site est en infraction avec la licence de la police.
+**Résolu.** Cornery (version « Demo — for Personal Use », incompatible avec un usage
+commercial) a été **remplacée par Fredoka**, police display arrondie sous licence
+**SIL Open Font License 1.1** (usage commercial libre). Les fichiers `cornery.otf` /
+`cornery.ttf` ont été supprimés d'`assets/fonts/`.
 
-Trois issues, à trancher :
-
-1. acheter la licence commerciale de Cornery ;
-2. la remplacer par une police librement utilisable en commercial ;
-3. la remplacer par une police achetée ailleurs.
-
-> **Le remplacement est peu coûteux techniquement** : seule la variable `--d` dans
-> `styles.css` est à changer (plus le bloc `@font-face` de Cornery en tête de fichier).
-> La police de remplacement doit couvrir les accents français et le caractère €.
-
-Le point est signalé sur `mentions-legales.html` (§ Polices de caractères) en surbrillance.
+Fredoka est auto-hébergée dans `assets/fonts/` (`fredoka-latin.woff2` +
+`fredoka-latin-ext.woff2`, latin variable 400→700, couvre accents français et €).
+Deux règles `@font-face` en tête de `styles.css`, variable `--d` mise à jour, titres
+en poids 600 pour garder la présence de l'ancien display. Aucune requête vers un tiers.
 
 ### 1.5 Photographies — ce sont toutes des placeholders
 
@@ -258,7 +252,7 @@ Conséquences assumées :
 ## 6. À vérifier après la mise en ligne
 
 - [ ] `grep -rn "à fournir\|à confirmer\|à trancher\|à régler" *.html` ne renvoie plus rien
-- [ ] La licence de **Cornery** est achetée, ou la police est remplacée (§ 1.4)
+- [x] La licence de **Cornery** est achetée, ou la police est remplacée (§ 1.4) — remplacée par Fredoka (OFL) le 17/07/2026
 - [ ] Les **vraies photos** ont remplacé les placeholders, avec crédit et droits documentés (§ 1.5)
 - [ ] Le bloc **hébergeur** des mentions légales est renseigné (§ 1.3)
 - [ ] `canonical`, `og:url`, `sitemap.xml` et `robots.txt` pointent le vrai domaine (§ 5)
