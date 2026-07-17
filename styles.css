@@ -11,6 +11,37 @@
   font-weight:400; font-style:normal; font-display:swap;
 }
 
+/* ── Archivo, auto-hébergée ──
+   Rapatriée de Google Fonts le 17 juillet 2026 (SIL Open Font License 1.1).
+   Servie depuis ce serveur : le navigateur du visiteur ne contacte plus
+   les serveurs de Google, donc son IP ne leur part plus sans consentement.
+   Le droit (romain) est une police variable — une seule requête couvre
+   400 → 800. L'italique livré par Google est statique, en 400. */
+@font-face{
+  font-family:"Archivo";
+  src:url("assets/fonts/archivo-normal-latin.woff2") format("woff2");
+  font-weight:100 900; font-style:normal; font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  src:url("assets/fonts/archivo-normal-latin-ext.woff2") format("woff2");
+  font-weight:100 900; font-style:normal; font-display:swap;
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"Archivo";
+  src:url("assets/fonts/archivo-italic-latin.woff2") format("woff2");
+  font-weight:400; font-style:italic; font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Archivo";
+  src:url("assets/fonts/archivo-italic-latin-ext.woff2") format("woff2");
+  font-weight:400; font-style:italic; font-display:swap;
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
 :root{
   --creme:      #FBF0DC;
   --creme-2:    #F7E7C6;
@@ -975,4 +1006,224 @@ body.leve .fleur-hero{ animation:parait 1.2s ease .95s forwards; }
   .rev{ opacity:1; transform:none; }
   .intro{ display:none; }
   .hero__titre, .hero__tags, .hero__phrase, .hero__actions, .fleur-hero{ opacity:1; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PAGES LÉGALES — « le tiroir de l'entrée »
+   Dans une maison, les papiers vivent dans le tiroir de l'entrée.
+   Mêmes couleurs, mêmes vagues, mêmes marguerites que le reste :
+   c'est la même maison, juste la pièce où l'on range les papiers.
+   ══════════════════════════════════════════════════════════════ */
+
+/* Sur ces pages il n'y a pas de hero sombre derrière la nav :
+   elle est posée sur le crème dès le premier pixel, sans JS. */
+.nav--legale{
+  background:var(--creme);
+  padding:.6rem var(--pad);
+  box-shadow:0 4px 24px rgba(42,26,18,.14);
+}
+.nav--legale .nav__logo img{ height:clamp(44px, 4.8vw, 60px); }
+.nav--legale .nav__liens a{ color:var(--brun); border-color:rgba(42,26,18,.2); }
+.nav--legale .nav__liens a:hover{ background:var(--orange); color:var(--blanc); border-color:var(--orange); }
+.nav--legale .nav__burger span{ background:var(--brun); }
+
+/* ── En-tête de page ── */
+.legal-head{
+  position:relative;
+  max-width:940px; margin:0 auto;
+  padding:clamp(8rem,15vh,11rem) var(--pad) clamp(1.6rem,4vh,2.4rem);
+}
+.legal-titre{
+  font-family:var(--d);
+  font-size:clamp(2.6rem,7vw,5rem);
+  line-height:1;
+  letter-spacing:.01em;
+  margin-bottom:1.1rem;
+}
+.legal-lede{
+  max-width:56ch;
+  font-size:clamp(1rem,1.4vw,1.15rem);
+  color:rgba(42,26,18,.78);
+}
+.legal-maj{
+  margin-top:1.4rem; padding-top:.9rem;
+  max-width:56ch;
+  border-top:1px dashed rgba(42,26,18,.28);
+  font-size:.78rem; font-weight:600;
+  letter-spacing:.1em; text-transform:uppercase;
+  color:rgba(42,26,18,.55);
+}
+
+/* la grosse fleur de la maison, en filigrane dans le coin */
+.legal-fleur{
+  position:absolute; top:2rem; right:-6rem;
+  width:clamp(160px,20vw,280px); height:auto;
+  opacity:.16; pointer-events:none; z-index:0;
+  animation:tourne 60s linear infinite;
+}
+.legal-head > *:not(.legal-fleur){ position:relative; z-index:1; }
+
+/* ── Corps ── */
+.legal{
+  max-width:940px; margin:0 auto;
+  padding:0 var(--pad) clamp(3rem,7vh,5rem);
+}
+.legal > p, .legal > ul, .legal > ol{ max-width:68ch; }
+.legal p + p{ margin-top:1em; }
+
+.legal h2{
+  font-family:var(--d);
+  font-weight:400;
+  font-size:clamp(1.6rem,3.2vw,2.5rem);
+  line-height:1.1;
+  margin:clamp(2.6rem,5vh,3.6rem) 0 1rem;
+  padding-top:1.2rem;
+  border-top:2px dashed rgba(42,26,18,.22);
+}
+.legal h3{
+  font-family:var(--c);
+  font-weight:800;
+  font-size:.92rem;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--orange);
+  margin:1.8rem 0 .6rem;
+}
+
+/* puces : la marguerite de la maison, en petit.
+   La fiche d'identité (.legal-id) est aussi un <ul> enfant direct de .legal :
+   on l'exclut ici plutôt que de tenter de la rattraper plus bas — un
+   `content:none` à la spécificité plus faible ne l'aurait pas emporté. */
+.legal ul{ margin:1rem 0; }
+.legal > ul:not(.legal-id) > li{
+  position:relative;
+  padding:.35rem 0 .35rem 1.7rem;
+}
+.legal > ul:not(.legal-id) > li::before{
+  content:""; position:absolute; left:0; top:.72em;
+  width:.72em; height:.72em;
+  background:var(--olive);
+  -webkit-mask:var(--m-fleur) center/contain no-repeat;
+  mask:var(--m-fleur) center/contain no-repeat;
+}
+
+.legal a:not(.btn){
+  color:var(--brique);
+  font-weight:600;
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-thickness:1.5px;
+  text-decoration-color:rgba(192,64,43,.45);
+  transition:text-decoration-color .25s, color .25s;
+}
+.legal a:not(.btn):hover{ color:var(--orange); text-decoration-color:var(--orange); }
+
+/* ── La fiche d'identité : le papier posé dans le tiroir ──
+   Mêmes lignes pointillées que les horaires de la maison. */
+.legal-id{
+  margin:1.4rem 0;
+  max-width:68ch;
+  background:var(--creme-2);
+  border-radius:18px;
+  padding:.6rem clamp(1.1rem,2.5vw,1.8rem);
+}
+.legal-id li{
+  display:flex; align-items:baseline; justify-content:space-between;
+  gap:1rem; padding:.7rem 0;
+  border-bottom:1px dashed rgba(42,26,18,.25);
+  font-size:.92rem;
+}
+.legal-id li:last-child{ border-bottom:0; }
+.legal-id .k{
+  color:rgba(42,26,18,.62);
+  font-weight:500;
+  flex:none;
+}
+.legal-id .v{ font-weight:700; text-align:right; }
+
+/* ── L'encadré « d'où ça vient » : le post-it du tiroir ── */
+.legal-note{
+  max-width:68ch;
+  margin:1.4rem 0;
+  padding:1.1rem 1.4rem;
+  background:var(--blanc);
+  border:2px solid rgba(42,26,18,.14);
+  border-left:6px solid var(--olive);
+  border-radius:14px;
+  font-size:.9rem;
+  color:rgba(42,26,18,.78);
+}
+.legal-note strong{ color:var(--brun); }
+.legal-note--alerte{ border-left-color:var(--brique); }
+
+/* ── Séparateur : trois marguerites, comme dans le bandeau ── */
+.legal-sep{
+  display:flex; align-items:center; justify-content:center;
+  gap:1.2rem;
+  margin:clamp(2.6rem,5vh,3.6rem) 0;
+}
+.legal-sep img{
+  width:22px; height:auto;
+  opacity:.5;
+  animation:respire 9s ease-in-out infinite;
+}
+.legal-sep img:nth-child(2){ width:30px; animation-delay:-3s; }
+.legal-sep img:nth-child(3){ animation-delay:-6s; }
+
+/* ── Trou assumé : ce qui n'a pas pu être vérifié se voit ──
+   Le rose n'est pas une couleur de la maison : c'est exprès.
+   C'est un signal, pas une décoration. */
+.manque{
+  background:#FFD9E2;
+  color:#7A0B26;
+  padding:1px 7px;
+  border-radius:3px;
+  font-weight:600;
+  font-size:.94em;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+
+/* ── Bas de page ── */
+.legal-actions{
+  display:flex; gap:1rem; flex-wrap:wrap;
+  margin-top:clamp(2.6rem,5vh,3.6rem);
+  padding-top:1.8rem;
+  border-top:2px dashed rgba(42,26,18,.22);
+}
+
+@media (max-width:700px){
+  .legal-id li{ flex-wrap:wrap; gap:.15rem; }
+  .legal-id .v{ text-align:left; width:100%; }
+  .legal-fleur{ display:none; }
+}
+
+/* ── Le pied de page des pages légales ──
+   Même bois que celui de l'accueil, en plus court : trois blocs,
+   pas de plan. */
+.infos--legale{ padding-bottom:1.5rem; }
+.infos--legale .infos__grille{ grid-template-columns:repeat(3,1fr); }
+.infos--legale .bloc a:not(.tel):not(.reseaux a){ text-decoration:none; }
+.pied-liens{ display:flex; flex-direction:column; gap:.5rem; align-items:flex-start; }
+.pied-liens a{
+  font-size:.88rem;
+  color:rgba(255,247,230,.78);
+  border-bottom:1px solid transparent;
+  transition:color .25s, border-color .25s;
+}
+.pied-liens a:hover{ color:var(--moutarde); border-color:var(--moutarde); }
+
+/* la ligne légale du bas, sur toutes les pages */
+.infos__legal a{
+  color:rgba(255,247,230,.62);
+  text-decoration:underline;
+  text-underline-offset:3px;
+  text-decoration-color:rgba(255,247,230,.28);
+  transition:color .25s, text-decoration-color .25s;
+}
+.infos__legal a:hover{ color:var(--moutarde); text-decoration-color:var(--moutarde); }
+.infos__legal a[aria-current="page"]{ color:var(--moutarde); }
+.infos__signature{ margin-top:.5rem; }
+
+@media (max-width:860px){
+  .infos--legale .infos__grille{ grid-template-columns:1fr; }
 }
